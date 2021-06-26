@@ -1,0 +1,46 @@
+/*1) Consulta Que muestre los tipos de productos y las ventas que se realizan anualmente */	  
+
+select  categoria.CATEGORIA_DESCRIPCION, producto.PRODUCTO_NOMBRE, detalles_venta.DETALLES_CANTIDAD_PRODUCTO,
+extract(year from detalles_venta.fecha_venta),
+count(detalles_venta.DETALLES_CANTIDAD_PRODUCTO) from venta
+inner join detalles_venta on venta.venta_id=detalles_venta.venta_id
+inner join producto on producto.producto_codigo=detalles_venta.producto_codigo
+inner join categoria on categoria.categoria_id=producto.categoria_id
+inner join empleado on empleado.empleado_codigo = venta.empleado_codigo
+inner join sucursal on sucursal.sucursal_codigo = empleado.sucursal_codigo
+
+group by categoria.CATEGORIA_DESCRIPCION, producto.producto_nombre , detalles_venta.DETALLES_CANTIDAD_PRODUCTO,
+detalles_venta.fecha_venta
+order by detalles_venta.DETALLES_CANTIDAD_PRODUCTO desc
+
+/*2) Consultar por ciudad, cuantos ingresos anuales se han obtenido en cada almacén  */
+
+select  sucursal.sucursal_direccion,
+extract(year from detalles_venta.fecha_venta), 
+sum(detalles_venta.DETALLES_TOTAL) from venta
+inner join detalles_venta on venta.venta_id=detalles_venta.venta_id
+inner join empleado on empleado.empleado_codigo = venta.empleado_codigo
+inner join sucursal on sucursal.sucursal_codigo = empleado.sucursal_codigo
+group by  sucursal.sucursal_direccion, detalles_venta.fecha_venta
+order by sucursal.sucursal_direccion desc
+
+/*3) Consultar por percheros, cuantas devoluciones ha tenido un mismo trabajador */
+
+select devoluciones.devolucion_descripcion, empleado.empleado_nombre , empleado.empleado_apellido,
+count(detalles_venta.DETALLES_TOTAL) from venta 
+inner join detalles_venta on venta.venta_id=detalles_venta.venta_id
+inner join devoluciones on venta.venta_id=devoluciones.venta_id
+inner join empleado on empleado.empleado_codigo = venta.empleado_codigo
+where devoluciones.devolucion_descripcion='SI'
+group by  devoluciones.devolucion_descripcion, empleado.empleado_nombre , empleado.empleado_apellido
+order by devoluciones.devolucion_descripcion 
+
+
+/*4) Consultar Por cada promoción que se realice, cual es la cantidad de ahorro que ha generado el cliente. */
+
+select detalles_venta.detalles_id, producto.PRODUCTO_NOMBRE, detalles_venta.detalles_cantidad_producto , detalles_venta.detalles_precio_producto , 
+producto.producto_costo , detalles_venta.detalles_cantidad_producto* detalles_venta.detalles_precio_producto-detalles_venta.detalles_cantidad_producto*producto.producto_costo as ahorro,
+detalles_venta.detalles_total,
+detalles_venta.detalles_total-(detalles_venta.detalles_cantidad_producto* detalles_venta.detalles_precio_producto-detalles_venta.detalles_cantidad_producto*producto.producto_costo) as TotalFinal
+from producto
+inner join detalles_venta on detalles_venta.producto_codigo=producto.producto_codigo

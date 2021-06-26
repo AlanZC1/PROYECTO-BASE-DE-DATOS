@@ -1,0 +1,95 @@
+/* TABLA DE AREA DE TRABAJP */
+insert into AREA_DE_TRABAJO values (001,'Recepción de mercancías' );
+insert into AREA_DE_TRABAJO values (002,'Línea de caja' );
+insert into AREA_DE_TRABAJO values (003,'Sala de venta' );
+insert into AREA_DE_TRABAJO values (004,'Sala de entrada' );
+
+/* TABLA DE CATEGORIA */
+insert into CATEGORIA values (001,'Herramientas' );
+insert into CATEGORIA values (002,'Pinturas y Accesorios' );
+insert into CATEGORIA values (003,'Tubos' );
+insert into CATEGORIA values (004,'Plomeria' );
+insert into CATEGORIA values (005,'Tornillos' );
+insert into CATEGORIA values (006,'Conectores' );
+
+/* TABLA CLIENTE */
+insert into CLIENTE values (001,'JUAN','CEVALLOS','AV JIMMY GARCIA',0987654321, 20/2/1996 ,'Masculino','juancevallos@gmail.com' );
+insert into CLIENTE values (002,'ELIZABET','JARAMILLO','LA PROAÑO',0999827732, 17/4/1994 ,'Femenino','elizabetjaramillo@gmail.com' );
+insert into CLIENTE values (003,'ALAN','MARTINEZ','SAN AGUSTIN',0984762463, 2/7/1999 ,'Masculino','alanmartinez@gmail.com' );
+insert into CLIENTE values (004,'PABLO','ESCOBAR','LOS ESTEROS',0955653341, 10/5/2000 ,'Masculino','pabloescobar@gmail.com' );
+insert into CLIENTE values (005,'ROCIO','CARDENAS','LAS 7 PUÑALADAS',0987444521, 26/8/1990 ,'Femenino','rociocardenas@gmail.com' );
+
+/* TABLA DETALLES DE VENTA */
+begin;
+insert into VENTA valueS (001,001,001,'21/6/2021');
+insert into detalles_venta values(001,001,002,3,50.00,0.0,'20/6/2021');
+update detalles_venta set detalles_total=(detalles_cantidad_producto*detalles_precio_producto) where detalles_ID=001;
+update producto set producto_stock=producto_stock-3 where producto_codigo=002;
+commit;
+begin;
+insert into VENTA valueS (002,002,002,'20/6/2021');
+insert into detalles_venta values(002,002,003,1,60.00,0.0,'14/7/2020');
+update detalles_venta set detalles_total=(detalles_cantidad_producto*detalles_precio_producto) where detalles_ID=002;
+update producto set producto_stock=producto_stock-1 where producto_codigo=003;
+commit;
+begin;
+insert into VENTA valueS (003,004,005,'12/3/2021');
+insert into detalles_venta values(003,003,004,10,30.00,0.0,'27/5/2021');
+update detalles_venta set detalles_total=(detalles_cantidad_producto*detalles_precio_producto) where detalles_ID=003;
+update producto set producto_stock=producto_stock-10 where producto_codigo=005;
+commit;
+begin;
+insert into VENTA valueS (004,005,004,'20/1/2021');
+insert into detalles_venta values(004,004,005,5,61.00,0.0,'16/4/2021');
+update detalles_venta set detalles_total=(detalles_cantidad_producto*detalles_precio_producto) where detalles_ID=004;
+update producto set producto_stock=producto_stock-5 where producto_codigo=004;
+commit;
+rollback;
+
+/* Tabla devoluciones */
+insert into DEVOLUCIONES VALUES (001,002,'SI');
+insert into DEVOLUCIONES VALUES (002,001,'NO');
+insert into DEVOLUCIONES VALUES (003,003,'SI');
+insert into DEVOLUCIONES VALUES (004,004,'NO');
+insert into DEVOLUCIONES VALUES (005,002,'NO');
+
+/* Tabla empleado */
+insert into EMPLEADO VALUES (001,001,002,'Zambrano','20/06/1996',0999999999,'zambano@gmail.com','Masculino','Alan' );
+insert into EMPLEADO VALUES (002,001,003,'Zamora','17/07/1998',0999999999,'elizabeth@gmail.com','Femenino','Elizabeth' );
+insert into EMPLEADO VALUES (003,002,004,'Cevallos','28/02/1990',0999999999,'flor@gmail.com','Feminino','Flor' );
+insert into EMPLEADO VALUES (004,003,001,'Soledispa','10/04/1991',0999999999,'pedro@gmail.com','Masculino','Pedro' );
+insert into EMPLEADO VALUES (005,004,001,'Moreira','27/05/1989',0999999999,'robert@gmail.com','Femenino','Robert' );
+
+/* Tabla EMPRESA */ 
+insert into EMPRESA values ('Firrero',1234456632,'San Agustin',0998877669);
+
+/* TABLA PRODUCTO */
+insert into PRODUCTO values (001,001,004,'Martillos-clavos',56.00, 59.00, 40 );
+insert into PRODUCTO values (002,003,002,'tubos-de-18pulgadas',36.00, 50.00, 30 );
+insert into PRODUCTO values (003,002,003,'Pintura-roja, Pintura-Blanca y Pintura-negra',45.00, 60.00, 20 );
+insert into PRODUCTO values (004,005,001,'Tornillos, tuercas y rodelas',20.00, 30.00,  20 );
+insert into PRODUCTO values (005,004,004,'Tubo de plomería de cobre y Tubería de tubería inoxidable.',52.00, 61.00, 25 );
+
+/* TABLA PROVEEDOR */
+insert into PROVEEDOR (0001,'CENEFLEX', 'Manta-San Agustin','0987651234','ceneflex@gmail.com','20/06/2021' );
+insert into PROVEEDOR (0002,'CASTEK S.A', 'Portoviejo','0987343234','casteks.a@gmail.com','10/08/2021' );
+insert into PROVEEDOR (0003,'PERFILPLAST', 'Quito','0986451244','perfilplast@gmail.com','1508/2021' );
+insert into PROVEEDOR (0004,'METALES HIDALGO', 'Guayaquil','0986754334','metaleshidalgp@gmail.com','27/07/2021');}
+
+/* TABLA SUCURSAL */
+
+insert into SUCURSAL values (001,1234456632,'Manta',0999888877);
+insert into SUCURSAL values (002,1234456632,'Portoviejo',0999888877);
+insert into SUCURSAL values (003,1234456632,'Quito',0999888877);
+insert into SUCURSAL values (004,1234456632,'Guayaquil',0999888877);
+
+/* TABLA SUCURSAL PROVEEDOR */
+insert into SUCURSAL_PROVEEDORES values (001,001,0001);
+insert into SUCURSAL_PROVEEDORES values (002,001,0001);
+insert into SUCURSAL_PROVEEDORES values (003,004,0004);
+insert into SUCURSAL_PROVEEDORES values (004,003,0003);
+insert into SUCURSAL_PROVEEDORES values (005,004,0004);
+insert into SUCURSAL_PROVEEDORES values (006,003,0003);
+insert into SUCURSAL_PROVEEDORES values (007,002,0002);
+
+
